@@ -51,6 +51,19 @@ class AlienInvasion:
                 self._update_bullets()
                 self._update_aliens()
             self._update_screen()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            #Redraw the screen during each pass through the loop.
+            self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
+
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
+
+
+
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets."""
         #update bullet positions.
@@ -194,7 +207,7 @@ class AlienInvasion:
         # Create an alien and find the number of aliens in a row.
         # Spacing between each alien is equal to one alien width.
         alien = Alien(self)
-        alien_width, alien height = alien.rect.size
+        alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
 
@@ -206,10 +219,10 @@ class AlienInvasion:
 
         #Create the full fleet of aliens.
         for row_number in range(number_rows):
-        # Create the first row of aliens.
-        for alien_number in range(number_aliens_x):
+            # Create the first row of aliens.
+            for alien_number in range(number_aliens_x):
             # Create an alien and place it in the row.
-            self._create_alien(alien_number, row_number)
+                self._create_alien(alien_number, row_number)
     def _create_alien(self, alien_number, row_number):
         """Create an alien and place it in the row."""
         alien = Alien(self)
