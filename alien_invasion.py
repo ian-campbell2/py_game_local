@@ -29,11 +29,11 @@ class AlienInvasion:
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
 
-
+#########
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
-        self.aliens = pygame.spriteGroup()
-
+        self.aliens = pygame.sprite.Group()
+#########
         self._create_fleet()
 
         #Make the Play Button
@@ -51,6 +51,7 @@ class AlienInvasion:
                 self._update_bullets()
                 self._update_aliens()
             self._update_screen()
+            '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -60,10 +61,10 @@ class AlienInvasion:
             self.ship.blitme()
 
         # Make the most recently drawn screen visible.
-        pygame.display.flip()
+        #pygame.display.flip()
 
 
-
+'''
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets."""
         #update bullet positions.
@@ -73,10 +74,11 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-        print(len(self.bullets))
+        #print(len(self.bullets))
         self._check_bullet_alien_collisions()
             #########self._update_screen()
             # Watch for keyboard and mouse events.
+            '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -87,15 +89,14 @@ class AlienInvasion:
 
             # Make the most recently drawn screen visible.
         pygame.display.flip()
-
+'''
         # Check for any bullets that have hit aliens.
         # If so, get rid of the bullet and the alien.
     
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-alien collisions."""
         # Remove any bullets and aliens that have collided.
-        collisions = pygame.sprite.groupcollide(
-                self.bullets, self.aliens, True, True)
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
         if collisions:
             for aliens in collisions.values():
@@ -142,13 +143,13 @@ class AlienInvasion:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
             # Reset the game settings.
+            self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
             self.sb.prep_ships()
 
-            self.settings.initialize_dynamic_settings()
     
             # Get rid of any remaining aliens and bullets.
             self.aliens.empty()
